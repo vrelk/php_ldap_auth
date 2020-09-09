@@ -1,0 +1,53 @@
+<?php
+    $config = array();
+
+    //array of tokens to be sent using the X-API-KEY header to bypass auth. -- Get a value using tools.php
+    $config['SERVICE_TOKENS'] = array(
+        '5950929B6B5DFE44B79C00861265C439881954E9C75C4CC27E2407A35919019F',
+        'lS7S75oSwZonBlIvRMdV9MqQymxji3zosTJRcEVR8rQgNYiVLqJayqYtW1hb1CC6'
+    );
+
+    //encryption key -- Get a value using tools.php
+    $config['SECRET'] = '29586185A4980C906A3EC1C546007F2C1EFE5273C5E64AB13046379EB9C266AB';
+
+    //encryption hash -- Get a value using tools.php
+    $config['SECRET_HASH'] = 'GDm4ACG/6O/VhrSFVsAFIA==';
+
+    //domain for the cookie, can allow the logon to work for multiple sites. 'example.com' will work on 'sub.example.com', but 'sub.example.com' will not work on 'example.com'
+    $config['COOKIE_DOMAIN'] = 'example.com';
+
+    //cookie name
+    $config['COOKIE_NAME'] = '_nginxauth';
+
+    //only transmit the cookie over HTTPS
+    $config['COOKIE_SECURE'] = false;
+
+    //array of AD servers hostname/ip
+    $config['AD_SERVERS'] = array('ad.example.com', '10.10.10.10');
+
+    //options = SSL, TLS, anything else = unencrypted
+    $config['AD_SERVER_ENCRYPTION'] = NULL;
+
+    //default = 5
+    $config['AD_TIMEOUT'] = 5;
+
+    //default = false
+    $config['AD_FOLLOW_REFERRALS'] = false;
+
+    //ex: @vrelk.net (appended to username when logging in)
+    $config['AD_ACCOUNT_SUFFIX'] = '@example.local';
+
+    // The base distinguished name of your domain to perform searches upon.
+    $config['AD_BASE_DN'] = 'DC=example,DC=local';
+
+
+
+    //Overrides using HTTP Headers
+    $config['AD_SERVERS'] = (!empty($_SERVER['HTTP_X_AD_HOSTS']) ? explode(',', trim($_SERVER['HTTP_X_AD_HOSTS'],',')) : $config['AD_SERVERS']);
+    $config['AD_TIMEOUT'] = (!empty($_SERVER['HTTP_X_AD_TIMEOUT']) ? intval($_SERVER['HTTP_X_AD_TIMEOUT']) : $config['AD_TIMEOUT']);
+    $config['AD_FOLLOW_REFERRALS'] = (!empty($_SERVER['HTTP_X_FOLLOW_REFERRALS']) ? boolval($_SERVER['HTTP_X_FOLLOW_REFERRALS']) : $config['AD_FOLLOW_REFERRALS']);
+    $config['AD_ACCOUNT_SUFFIX'] = (!empty($_SERVER['HTTP_X_AD_ACCOUNT_SUFFIX']) ? $_SERVER['HTTP_X_AD_ACCOUNT_SUFFIX'] : $config['AD_ACCOUNT_SUFFIX']);
+    $config['AD_BASE_DN'] = (!empty($_SERVER['HTTP_X_AD_TIMEOUT']) ? intval($_SERVER['HTTP_X_AD_TIMEOUT']) : $config['AD_BASE_DN']);
+    $config['AD_SERVER_ENCRYPTION'] = (!empty($_SERVER['HTTP_X_AD_SERVER_ENCRYPTION']) ? intval($_SERVER['HTTP_X_AD_SERVER_ENCRYPTION']) : $config['AD_SERVER_ENCRYPTION']);
+    $config['COOKIE_NAME'] = (!empty($_SERVER['HTTP_X_COOKIE_NAME']) ? intval($_SERVER['HTTP_X_COOKIE_NAME']) : $config['COOKIE_NAME']);
+    $config['COOKIE_DOMAIN'] = (!empty($_SERVER['HTTP_X_COOKIE_DOMAIN']) ? intval($_SERVER['HTTP_X_COOKIE_DOMAIN']) : $config['COOKIE_DOMAIN']);
